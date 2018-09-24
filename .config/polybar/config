@@ -5,7 +5,7 @@ accent = #fba922
 monitor = eDP-1
 bottom = true
 width = 100%
-height = 22
+height = 25
 
 background = #1c1c1c
 foreground = #eefafafa
@@ -23,59 +23,32 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 6
 
-font-0 = NotoSans-Regular:size=8;0
-font-1 = Unifont:size=5;0
-font-2 = FontAwesome:size=8;0
-font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
-font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
-font-5 = "Font Awesome 5 Brands:pixelsize=8;1"
-font-6 = material\-wifi:pixelsize=10;1
-modules-left = i3 fs-root cpu memory
-modules-right = wireless-network wired-network xbacklight battery clock
+font-0 = NotoSans-Regular:weight=bold:size=8;2
+font-1 = Unifont:size=5;2
+font-2 = FontAwesome:size=8;2
+font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=8;2"
+font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=8;2"
+font-5 = "Font Awesome 5 Brands:pixelsize=8;2"
+font-6 = material\-wifi:pixelsize=10;2
+modules-left = i3 fs-root fs-home
+modules-center = cpu memory
+modules-right = temperature clock alsa
 
-wm-restack = i3
-
+tray-position = right
+tray-padding = 2
+tray-detached = false
+tray-maxsize = 16
+;tray-padding = 0
+tray-scale = 1.0
 [module/fs-root]
 type = internal/fs
 mount-0 = /
-label-mounted = %{F#e60053}%percentage_used%%%{F-} used of %mountpoint%
+label-mounted = %{F#e60053}%percentage_used%%%{F-} %mountpoint%
 
-[module/xbacklight]
-type = internal/xbacklight
-output = eDP-1
-format = <label> <bar>
-label=
-label-font=0
-
-ramp-0 = 
-ramp-0-foreground = #666
-ramp-1 = 
-ramp-1-foreground = #999
-ramp-2 = 
-ramp-2-foreground = #fff
-
-bar-width = 12
-bar-indicator = |
-bar-indicator-font = 6
-bar-indicator-foreground = #bbffffff
-bar-fill = ─
-bar-fill-font = 6
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 6
-bar-empty-foreground = #44
-
-
-[module/backlight]
-type = internal/backlight
-card = intel_backlight
-format = <ramp> <label>
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = #666
-interactive = true
-
+[module/fs-home]
+type = internal/fs
+mount-0 = /home
+label-mounted = %{F#e60053}%percentage_used%%%{F-} %mountpoint%
 
 [module/i3]
 type = internal/i3
@@ -91,36 +64,36 @@ label-focused-foreground = #f3f3f3
 label-focused-background = #3f3f3f
 ;label-focused-underline = #${colors.accent}
 label-focused-underline = #9f78e1
-label-focused-font = 4
+label-focused-font = 0
 label-focused-padding = 4
 
 label-unfocused = %icon%  %name%
 label-unfocused-underline = #555555
-label-unfocused-font = 4
+label-unfocused-font = 0
 label-unfocused-padding = 4
 
 label-urgent = %icon%  %name%
 label-urgent-foreground = #000000
 label-urgent-background = #bd2c40
 label-urgent-underline = #9b0a20
-label-urgent-font = 4
+label-urgent-font = 0
 label-urgent-padding = 4
 
 label-visible = %icon%  %name%
 label-visible-foreground = #55ffffff
-label-visible-font = 4
+label-visible-font = 0
 label-visible-padding = 4
 
 
 [module/cpu]
 type = internal/cpu
 interval = 1.5
-format = <label> <bar-load>
+format = CPU <bar-load>
 
 label = CPU
-label-font = 3
+label-font = 0
 label-foreground = #99
-bar-load-width = 15
+bar-load-width = 10
 bar-load-gradient = true
 bar-load-foreground-0 = #449f3d
 bar-load-foreground-1 = #2f8419
@@ -138,53 +111,41 @@ bar-load-empty-foreground = #44
 [module/memory]
 type = internal/memory
 interval = 0.2
-format = <label> <bar-used>
+format = RAM  <bar-used>     SWAP <bar-swap-used>
 
 label = RAM
-label-font = 3
+label-font = 0
 label-foreground = #99
 
-bar-used-width = 15
+bar-used-width = 10
 bar-used-gradient = true
 bar-used-foreground-0 = #449f3d
 bar-used-foreground-1 = #2f8419
 bar-used-foreground-2 = #f5a70a
 bar-used-foreground-3 = #ed5456
 bar-used-indicator = █
-bar-used-indicator-font = 5
+bar-used-indicator-font = 6
 bar-used-indicator-foreground = #fff
 bar-used-fill = █
-bar-used-fill-font = 5
+bar-used-fill-font = 6
 bar-used-empty = █
-bar-used-empty-font = 5
+bar-used-empty-font = 6
 bar-used-empty-foreground = #44
 
-[module/wireless-network]
-type = internal/network
-interface = wlp3s0
-interval = 2.0
-ping-interval = 10
-
-format-connected = <ramp-signal> <label-connected>
-label-connected = %essid%
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-
-animation-packetloss-0 = 
-animation-packetloss-0-foreground = #ffa64c
-animation-packetloss-1 = 
-animation-packetloss-1-foreground = ${bar/top.foreground}
-animation-packetloss-framerate = 500
-
-[module/wired-network]
-type = internal/network
-interface = enp0s25
-interval = 2.0
-
-label-connected =   %local_ip%
+bar-swap-used-width = 10
+bar-swap-used-gradient = true
+bar-swap-used-foreground-0 = #449f3d
+bar-swap-used-foreground-1 = #2f8419
+bar-swap-used-foreground-2 = #f5a70a
+bar-swap-used-foreground-3 = #ed5456
+bar-swap-used-indicator = █
+bar-swap-used-indicator-font = 5
+bar-swap-used-indicator-foreground = #fff
+bar-swap-used-fill = █
+bar-swap-used-fill-font = 5
+bar-swap-used-empty = █
+bar-swap-used-empty-font = 5
+bar-swap-used-empty-foreground = #44
 
 
 [module/clock]
@@ -194,19 +155,10 @@ format-padding = 5
 format-foreground = #fff
 date = %%{F#bb}%Y-%m-%d%%{F-}  %%{F#ee}%H:%M%%{F-}
 
-[module/battery]
-type = internal/battery
-full-at = 98
-format-charging = <ramp-capacity>
-format-discharging = <ramp-capacity> <label-discharging>
-label-charging-font = 3
-label-discharging-font = 3
-label-discharging = %percentage%%
-label-full =
-;label-full-font = 3
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+[module/temperature]
+type = internal/temperature
+interval = 0.5
+thermal-zone = 3
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
 
+warn-temperature = 60
