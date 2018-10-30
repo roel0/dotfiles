@@ -137,6 +137,7 @@ exec_always --no-startup-id cbatticon
 exec_always --no-startup-id volumeicon
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 new_window 1pixel
+for_window [class="^.*"] border pixel 5
 exec --no-startup-id xautolock -time 5 -locker blurlock
 bindsym --release Print exec --no-startup-id "maim -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
 
